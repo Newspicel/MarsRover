@@ -3,28 +3,40 @@ package de.newspicel.greenfoot;
 import greenfoot.Greenfoot;
 import greenfoot.World;
 
-/**
- * Die einzigen aktiven Akteure in der Roboterwelt sind die Roboter.
- * Die Welt besteht aus 14 * 10 Feldern.
- */
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class Planet extends World {
-    private static int zellenGroesse = 50;
 
-    /**
-     * Erschaffe eine Welt mit 15 * 12 Zellen.
-     */
+    private BetterRover betterRover;
+
+
     public Planet() {
-        super(16, 12, zellenGroesse);
+        super(16, 12, 50);
         setBackground("images/boden.png");
         setPaintOrder(String.class, Rover.class, Marke.class, Gestein.class, Huegel.class);
         Greenfoot.setSpeed(20);
+    }
+
+    public void act() {
         setupDefaultWorld();
+        Greenfoot.delay(1);
+        //Edit here
+        for (int i = 0; i < 10; i++) {
+            betterRover.drive();
+        }
     }
 
-    private void setupDefaultWorld() {
-        Rover rover = new Rover(this, 1, 1);
+    public void setupDefaultWorld() {
+        deleteRover();
+        this.betterRover = new BetterRover(this, 0, 0);
+
     }
 
+    public void deleteRover() {
+        removeObjects(getObjects(BetterRover.class));
+        removeObjects(getObjects(Rover.class));
+    }
 
 }
