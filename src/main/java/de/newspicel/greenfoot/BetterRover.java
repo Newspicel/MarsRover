@@ -11,7 +11,7 @@ public class BetterRover extends Actor {
 
 
     public BetterRover(World world, int x, int y) {
-        world.addObject(this, x,y);
+        world.addObject(this, x, y);
         setImage("images/rover.png");
     }
 
@@ -19,7 +19,7 @@ public class BetterRover extends Actor {
         int posX = getX();
         int posY = getY();
 
-        if (huegelVorhanden("vorne")) {
+        if (hillExist(Preposition.FRONT)) {
             System.out.println("Zu steil!");
         } else if (getRotation() == 270 && getY() == 1) {
             System.out.println("Ich kann mich nicht bewegen");
@@ -28,7 +28,7 @@ public class BetterRover extends Actor {
             Greenfoot.delay(1);
         }
 
-        if (posX == getX() && posY == getY() && !huegelVorhanden("vorne")) {
+        if (posX == getX() && posY == getY() && !hillExist(Preposition.FRONT)) {
             System.out.println("Ich kann mich nicht bewegen");
         }
     }
@@ -43,55 +43,48 @@ public class BetterRover extends Actor {
         }
     }
 
-    public boolean gesteinVorhanden() {
-        if (getOneIntersectingObject(Gestein.class) != null) {
-            System.out.println("Gestein gefunden!");
-            return true;
-
-        }
-
-        return false;
+    public boolean stoneAvailability() {
+        return getOneIntersectingObject(Gestein.class) != null;
     }
 
-    public boolean huegelVorhanden(String richtung) {
+    public boolean hillExist(Preposition preposition) {
         int rot = getRotation();
 
-        if (richtung.equals("vorne") && rot == 0 || richtung.equals("rechts") && rot == 270 || richtung.equals("links") && rot == 90) {
+        if (preposition.equals(Preposition.FRONT) && rot == 0 || preposition.equals(Preposition.RIGHT) && rot == 270 || preposition.equals(Preposition.LEFT) && rot == 90) {
             if (getOneObjectAtOffset(1, 0, Huegel.class) != null && ((Huegel) getOneObjectAtOffset(1, 0, Huegel.class)).getSteigung() > 30) {
                 return true;
             }
         }
 
-        if (richtung.equals("vorne") && rot == 180 || richtung.equals("rechts") && rot == 90 || richtung.equals("links") && rot == 270) {
+        if (preposition.equals(Preposition.FRONT) && rot == 180 || preposition.equals(Preposition.RIGHT) && rot == 90 || preposition.equals(Preposition.LEFT) && rot == 270) {
             if (getOneObjectAtOffset(-1, 0, Huegel.class) != null && ((Huegel) getOneObjectAtOffset(-1, 0, Huegel.class)).getSteigung() > 30) {
                 return true;
             }
         }
 
-        if (richtung.equals("vorne") && rot == 90 || richtung.equals("rechts") && rot == 0 || richtung.equals("links") && rot == 180) {
+        if (preposition.equals(Preposition.FRONT) && rot == 90 || preposition.equals(Preposition.RIGHT) && rot == 0 || preposition.equals(Preposition.LEFT) && rot == 180) {
             if (getOneObjectAtOffset(0, 1, Huegel.class) != null && ((Huegel) getOneObjectAtOffset(0, 1, Huegel.class)).getSteigung() > 30) {
                 return true;
             }
-
         }
 
-        if (richtung.equals("vorne") && rot == 270 || richtung.equals("rechts") && rot == 180 || richtung.equals("links") && rot == 0) {
+        if (preposition.equals(Preposition.FRONT) && rot == 270 || preposition.equals(Preposition.RIGHT) && rot == 180 || preposition.equals(Preposition.LEFT) && rot == 0) {
             if (getOneObjectAtOffset(0, -1, Huegel.class) != null && ((Huegel) getOneObjectAtOffset(0, -1, Huegel.class)).getSteigung() > 30) {
                 return true;
             }
 
         }
 
-        if (!richtung.equals("vorne") && !richtung.equals("links") && !richtung.equals("rechts")) {
-            System.out.println("Befehl nicht korrekt!");
+        if (preposition.equals(Preposition.BACK)) {
+            System.out.println("You can´t look back!");
         }
 
         return false;
     }
 
 
-    public void analysiereGestein() {
-        if (gesteinVorhanden()) {
+    public void analyzingStone() {
+        if (stoneAvailability()) {
             System.out.println("Gestein untersucht! Wassergehalt ist " + ((Gestein) getOneIntersectingObject(Gestein.class)).getWassergehalt() + "%.");
             Greenfoot.delay(1);
             removeTouching(Gestein.class);
@@ -101,17 +94,17 @@ public class BetterRover extends Actor {
     }
 
 
-    public void setzeMarke() {
+    public void setMark() {
         getWorld().addObject(new Marke(), getX(), getY());
     }
 
 
-    public boolean markeVorhanden() {
+    public boolean markExist() {
         return getOneIntersectingObject(Marke.class) != null;
     }
 
-    public void entferneMarke() {
-        if (markeVorhanden()) {
+    public void removeMark() {
+        if (markExist()) {
             removeTouching(Marke.class);
         }
     }
