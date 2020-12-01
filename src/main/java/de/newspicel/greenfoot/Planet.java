@@ -1,5 +1,6 @@
 package de.newspicel.greenfoot;
 
+import de.newspicel.greenfoot.enums.Preposition;
 import greenfoot.Greenfoot;
 import greenfoot.World;
 
@@ -9,6 +10,8 @@ import java.util.List;
 
 public class Planet extends World {
 
+    private LessonRoverMethods lessonRoverMethods;
+
     private BetterRover betterRover;
 
 
@@ -17,6 +20,7 @@ public class Planet extends World {
         setBackground("images/boden.png");
         setPaintOrder(String.class, Rover.class, Marke.class, Gestein.class, Huegel.class);
         Greenfoot.setSpeed(20);
+        this.lessonRoverMethods = new LessonRoverMethods();
     }
 
     public void act() {
@@ -25,6 +29,7 @@ public class Planet extends World {
         //Edit here
         for (int i = 0; i < 10; i++) {
             betterRover.drive();
+            betterRover.rotate(Preposition.RIGHT);
         }
     }
 
