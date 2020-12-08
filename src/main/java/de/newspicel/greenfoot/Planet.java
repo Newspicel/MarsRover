@@ -1,17 +1,15 @@
 package de.newspicel.greenfoot;
 
-import de.newspicel.greenfoot.enums.Preposition;
+import de.newspicel.greenfoot.enums.Time;
 import greenfoot.Greenfoot;
 import greenfoot.World;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class Planet extends World {
 
-    private LessonRoverMethods lessonRoverMethods;
+    private final Time time = Time.DAY;
+    private final String name = "JadeHase";
 
+    private final LessonRoverMethods lessonRoverMethods;
     private BetterRover betterRover;
 
 
@@ -42,4 +40,15 @@ public class Planet extends World {
         removeObjects(getObjects(Rover.class));
     }
 
+    public Time getTime() {
+        return time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LessonRoverMethods getLessonRoverMethods() {
+        return lessonRoverMethods;
+    }
 }

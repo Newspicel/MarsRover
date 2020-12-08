@@ -1,28 +1,47 @@
 package de.newspicel.greenfoot;
 
 import de.newspicel.greenfoot.enums.Preposition;
+import de.newspicel.greenfoot.enums.RadioFrequency;
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
 import greenfoot.World;
 
 public class BetterRover extends Actor {
 
-    private World world;
+    private final Planet world;
 
 
-    public BetterRover(World world, int x, int y) {
+    private RadioFrequency radioFrequency = RadioFrequency.DEFAULT;
+    private int drivenDistance = 0;
+    private String name;
+
+    public BetterRover(Planet world, int x, int y, RadioFrequency radioFrequency, String name) {
+        this.world = world;
+        this.radioFrequency = radioFrequency;
+        this.name = name;
         world.addObject(this, x, y);
         setImage("images/rover.png");
+    }
+
+    public BetterRover(Planet world, int x, int y) {
+        this.world = world;
+        world.addObject(this, x, y);
+        setImage("images/rover.png");
+    }
+
+    public int measureTemperature() {
+        return world.getLessonRoverMethods().getTemperature(world.getTime());
     }
 
     public void drive() {
         if (!hillExist(Preposition.FRONT)) {
             move(1);
+            drivenDistance++;
             Greenfoot.delay(1);
         }
     }
 
-    public void drive(int length){
+    public void drive(int length) {
         for (int i = 0; i < length; i++) {
             drive();
         }
@@ -38,7 +57,7 @@ public class BetterRover extends Actor {
         }
     }
 
-    public void turnAround(){
+    public void turnAround() {
         setRotation(getRotation() + 180);
     }
 
@@ -111,5 +130,21 @@ public class BetterRover extends Actor {
     @Override
     public World getWorld() {
         return world;
+    }
+
+    public Planet getPlanet() {
+        return world;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public RadioFrequency getRadioFrequency() {
+        return radioFrequency;
+    }
+
+    public void setRadioFrequency(RadioFrequency radioFrequency) {
+        this.radioFrequency = radioFrequency;
     }
 }
