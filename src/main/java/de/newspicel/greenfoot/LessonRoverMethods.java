@@ -26,9 +26,9 @@ public class LessonRoverMethods {
 
     public int getTemperature(Time time) {
         if (time.equals(Time.DAY)) {
-            return random.nextInt(20 - (-50)) + (-50);
+            return random.nextInt(20 - (-70)) + (-70);
         } else {
-            return random.nextInt(-55 - (-85)) + (-85);
+            return random.nextInt(-70 - (-120)) + (-120);
         }
     }
 
