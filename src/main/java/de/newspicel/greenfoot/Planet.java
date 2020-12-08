@@ -24,13 +24,11 @@ public class Planet extends World {
     }
 
     public void act() {
+        
         setupDefaultWorld();
         Greenfoot.delay(1);
         //Edit here
-        for (int i = 0; i < 10; i++) {
-            betterRover.drive();
-            betterRover.rotate(Preposition.RIGHT);
-        }
+        betterRover.drive(100);
     }
 
     public void setupDefaultWorld() {

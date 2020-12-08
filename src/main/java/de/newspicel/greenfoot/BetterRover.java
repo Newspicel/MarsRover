@@ -16,20 +16,15 @@ public class BetterRover extends Actor {
     }
 
     public void drive() {
-        int posX = getX();
-        int posY = getY();
-
-        if (hillExist(Preposition.FRONT)) {
-            System.out.println("Zu steil!");
-        } else if (getRotation() == 270 && getY() == 1) {
-            System.out.println("Ich kann mich nicht bewegen");
-        } else {
+        if (!hillExist(Preposition.FRONT)) {
             move(1);
             Greenfoot.delay(1);
         }
+    }
 
-        if (posX == getX() && posY == getY() && !hillExist(Preposition.FRONT)) {
-            System.out.println("Ich kann mich nicht bewegen");
+    public void drive(int length){
+        for (int i = 0; i < length; i++) {
+            drive();
         }
     }
 
@@ -41,6 +36,10 @@ public class BetterRover extends Actor {
         } else {
             System.out.println("Befehl nicht korrekt!");
         }
+    }
+
+    public void turnAround(){
+        setRotation(getRotation() + 180);
     }
 
     public boolean stoneAvailability() {
